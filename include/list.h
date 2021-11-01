@@ -111,62 +111,98 @@ typedef struct s_opts
 
 #endif
 
+#ifndef TAR_OPTIONS_C
+#define TAR_OPTIONS_C
 
+bool check_options(t_opts*);
+t_opts *set_opts(int, char**);
+int add_file_list(t_files**, char*);
 
-void print_header(header *header);
+#endif
 
-//tar_options.c
-bool check_options(t_opts *opts);
-t_opts *set_opts(int argc, char *argv[]);
-int add_file_list(t_files **files, char *filename);
+// -------------------
 
-//tar_archive.c
-int open_archive(t_opts *opts);
-void end_archive(int fd);
-void create_archive(int fd, t_opts *opts);
-char *read_tar_content(int fd, int size);
-int write_to_tar(char *filename, int fd);
-void write_file(int fd, char *filename);
-void write_directory(int fd, char *dirname);
-int get_file_size(int fd);
-char *get_path(char *directory, char *content);
+#ifndef TAR_ARCHIVE_C
+#define TAR_ARCHIVE_C
 
-//tar_util.c
-int my_memset(char *buffer, char c, int size);
-char *my_itoa(char *dest, unsigned int number, int size, int base);
-void reset_list(t_files **files);
-void reset_opts(t_opts *opts);
+int open_archive(t_opts*);
+void end_archive(int);
+void create_archive(int, t_opts*);
+char *read_tar_content(int, int);
+int write_to_tar(char*, int);
+void write_file(int, char*);
+void write_directory(int, char*);
+int get_file_size(int);
+char *get_path(char*, char*);
+
+#endif
+
+// -------------------
+
+#ifndef TAR_UTIL_C
+#define TAR_UTIL_C
+
+int my_memset(char*, char, int);
+char *my_itoa(char*, unsigned int, int, int);
+void reset_list(t_files**);
+void reset_opts(t_opts*);
 t_files *initialize_files();
-long my_atoi(char *number_string, int size);
-long my_oct_to_dec(long octal_number);
-int my_iterative_pow(int num, int pow);
-unsigned long get_file_mtime(char *filename);
-unsigned int get_checksum(header *header);
-char get_typeflag(int mode);
-header *create_header(char *filename);
-unsigned int find_chksum(header *hdr);
+long my_atoi(char*, int);
+long my_oct_to_dec(long);
+int my_iterative_pow(int, int);
+unsigned long get_file_mtime(char*);
+unsigned int get_checksum(header*);
+char get_typeflag(int);
+header *create_header(char*);
+unsigned int find_chksum(header*);
 
-//tar_extract.c
-int extract_file(header *hdr, char *archive_content);
-int extract_directory(header *header);
-int get_header_size(header *header);
-int set_mtime(header *header);
-char *get_archive_content(int fd, int size);
-int get_archive_size(char *filename);
-bool is_header(header *hdr);
-int get_header_chksum(header *hdr);
-int extract_archive(int fd, t_opts *opts);
-unsigned long get_header_mtime(header *hdr);
-int get_header_mode(header *hdr);
+#endif
 
-//tar_list.c
-int list_archive(int fd, t_opts *opts);
-void remove_duplicates(t_files *files);
-void print_list(t_files **files);
+// -------------------
 
-//tar_append.c
-int append_archive(int fd, t_opts *opts);
+#ifndef TAR_EXTRACT_C
+#define TAR_EXTRACT_C
 
-//tar_update.c
-bool in_args(char *filename, t_files **args);
-int update_archive(int fd, t_opts *opts);
+int extract_file(header*, char*);
+int extract_directory(header*);
+int get_header_size(header*);
+int set_mtime(header*);
+char *get_archive_content(int, int);
+int get_archive_size(char*);
+bool is_header(header*);
+int get_header_chksum(header*);
+int extract_archive(int, t_opts*);
+unsigned long get_header_mtime(header*);
+int get_header_mode(header*);
+
+#endif
+
+// -------------------
+
+#ifndef TAR_LIST_C
+#define TAR_LIST_C
+
+int list_archive(int, t_opts*);
+void remove_duplicates(t_files*);
+void print_list(t_files**);
+
+#endif
+
+// -------------------
+
+#ifndef TAR_APPEND_C
+#define TAR_APPEND_C
+
+int append_archive(int, t_opts*);
+
+#endif
+
+// --------------------
+
+#ifndef TAR_UPDATE_C
+#define TAR_UPDATE_C
+
+bool in_args(char*, t_files**);
+int update_archive(int, t_opts*);
+
+#endif
