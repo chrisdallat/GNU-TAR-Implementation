@@ -1,5 +1,5 @@
 <!-- GETTING STARTED -->
-## TAR(GNU) Implimentation
+## TAR (GNU) Implementation
 ### Task Description
 
 my_tar is a replication of the GNU Tar command, only works for GNU format Tar headers.
